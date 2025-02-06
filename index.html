@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import component</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="import-component">Import component</h1>
+<ul>
+<li>
+<p>No need to add the Import component inside a dialog—the Import component itself displays a dialog.</p>
+</li>
+<li>
+<p>Simply use it as a child component inside your parent component.<br>
+Example format:</p>
+<pre><code>  @if(yourCondition){
+  		&lt;lib-import  [importData]="importData"  (uploadStatus)="importStatus($event)"&gt;&lt;/lib-import&gt;
+  }
+</code></pre>
+</li>
+</ul>
+<p><strong>@Input importData</strong></p>
+<p>Example format :</p>
+<pre><code>    importData:ImportData={
+        importHeader:'Import options',
+        fileFormat:['xlsx'],
+        contentData:{
+            importApiUrl: 'stores/' + '268' + '/optionsvariants/import',
+            sampleTemplate:[
+                {
+                    sheetName:'Options',
+                    columns:[
+                        { header: 'Name', key: 'name', width: 15,  },
+                        { header: 'Show Colors', key: 'showColors', width: 15  },
+                        { header: 'Description', key: 'description', width: 15  },
+                        { header: 'Sort Order', key: 'sortOrder', width: 15 }
+                    ],
+                    value:[
+                        {
+                            name:'Size',showColors:'TRUE',description:'Size is important',sortOrder:'1'
+                        }
+                    ]
+                },
+                {
+                    sheetName:'OptionValues',
+                    columns:[
+                        { header: 'Option Value', key: 'optionValue', width: 15,  },
+                        { header: 'Color', key: 'color', width: 15  },
+                        { header: 'Option Name', key: 'optionName', width: 15,type:'dropdown',dropDownValues:['Size']  },
+                        { header: 'Sort Order', key: 'sortOrder', width: 15 }
+                    ],
+                    value:[
+                        {
+                            optionValue:'s',color:'#005374',optionName:'Size',sortOrder:'1'
+                        }
+                    ]
+                },
+                {
+                    sheetName:'Instructions',
+                    columns:[
+                        { header: 'Instruction', key: 'instruction', width: 25  }
+                    ],
+                    value:[
+                        {
+                            instruction:'1) Option Name should be given in the option value sheets option name column.'
+                        },
+                        {
+                            instruction:'2) Option Name and Option Value length should be less than or equal to 50 characters long.'
+                        },
+                        {
+                            instruction:'3) Every option value should have provided option name.'
+                        }
+                    ]
+                }
+               
+            ],
+            fileName:'options_sample_template'
+        }
+
+    };
+</code></pre>
+<p><strong>The required fields for the ImportData :</strong></p>
+<ol>
+<li>
+<p><strong>importHeader</strong>: Title for the import dialog.</p>
+</li>
+<li>
+<p><strong>fileFormat</strong> : The file formats that your import needs to accept.</p>
+<pre><code> fileFormat:['xlsx','png']
+</code></pre>
+</li>
+<li>
+<p><strong>contentData</strong></p>
+<ol>
+<li>
+<p><strong>importApiUrl</strong> :  The api url for import</p>
+<pre><code> importApiUrl: 'stores/' + '268' + '/products/bulkimport'
+</code></pre>
+</li>
+<li>
+<p><strong>fileName</strong> : The name under which the file should be downloaded.</p>
+<p><strong>It should be a full name</strong></p>
+<pre><code>  fileName:'products_sample_template'
+</code></pre>
+</li>
+<li>
+<p><strong>sampleTemplate</strong>:</p>
+<ol>
+<li>
+<p><strong>sheetName</strong> :  Name of the sheet.</p>
+<pre><code>   sheetName:  "Products"
+</code></pre>
+</li>
+<li>
+<p><strong>column</strong> : Columns for that sheet</p>
+<pre><code>  columns: [
+         { "header": "Product Name", "key": "name", "width": 15 },
+         { "header": "Maximum Order Quantity", "key": "orderQuantityMaximum", "width": 22 },
+         { "header": "Short Description", "key": "description", "width": 15 },
+         { "header": "Product Unit Count", "key": "weightCount", "width": 18 }]
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+<p><strong>header</strong> :  Column name to be display on the sheet.<br>
+<strong>key</strong>:  	 Unique key to access the column.<br>
+<strong>width</strong>:  width of the column.</p>
+<p><strong>type:  'dropdown’</strong><br>
+<strong>dropDownValues?:string[]</strong></p>
+<p>If your column requires a dropdown value, add <code>type: 'dropdown'</code> and include the options in the <code>dropDownValues</code> array.</p>
+<pre><code>Example:
+ { "header":  "Brand Name", "key":  "brandName", "width":  15,type:'dropdown',dropDownValues:['Neutrogena','Lenavo','Lakme','Parachute','SUGAR Cosmetics'] }
+</code></pre>
+</li>
+</ol>
+<p><strong>Dont add dropvalues to new sheet instead just add  it to that column.</strong><br>
+3. <strong>value</strong>:<br>
+The data added to the sheet’s rows. Uses the column key property as the object key.</p>
+<pre><code>	value:[
+		   {name:'Product 1',orderQuantityMaximum:'10',description:'Product 1 is a good product',weightCount:'2'}
+		  ]
+</code></pre>
+<p>The data at <code>value[0]</code> is added to <strong>row 1</strong> of the sheet and so on. You can add multiple rows.</p>
+<p><strong>Instructions</strong> :</p>
+<p>Instruction should  be added as an new sheet.</p>
+<pre><code>	{
+		"sheetName":  "Instruction",
+		"columns": [
+		{ "header":  "Instruction", "key":  "instruction", "width":  35 }],
+		"value": [
+			{ "instruction":  "1. Before proceeding the Product Bulk Import, you need to fill the necessary Brand and Locations first in the admin portal." 
+			{ "instruction":  "2. Should not change the heading names &amp; sheet names in the import sheet" }]
+	}
+</code></pre>
+<p><strong>isMultiple : true</strong></p>
+<p>If your sheet requires multiple file uploads.(<strong>optional</strong>).</p>
+<p><strong>maxFileCount</strong><br>
+If you need to control the import file count (<strong>optional</strong>).</p>
+<pre><code>		maxFileCount:  5
+</code></pre>
+<p><strong>isCustomImport</strong>:<br>
+When you need to define your own success message and inprogess message like <strong>products import</strong>.  (<strong>optional</strong>)</p>
+<pre><code>isCustomImport:  true,
+inProgressMessage:  'Kindly hold on for a moment! Due to the ongoing products import, you cannot initiate another import in products.',
+successMessage:  'Product Import process successfully initiated, Check dashboard for status update',
+</code></pre>
+<p><strong>@Output uploadStatus</strong><br>
+Emits a boolean value when the dialog closes.</p>
+<ul>
+<li>If <code>uploadStatus</code> is <code>true</code> (indicating the import API was called), you should refresh the page or make an API call.</li>
+<li>If <code>uploadStatus</code> is <code>false</code>, no action is needed.</li>
+</ul>
+<p>Example Format:</p>
+<pre><code>	importStatus(event:boolean){
+		if(event){
+			// make an api call to refresh your page
+		}
+	}
+</code></pre>
+</div>
+</body>
+
+</html>
