@@ -39,7 +39,7 @@ Example format:</p>
                         { header: 'Description', key: 'description', width: 15  },
                         { header: 'Sort Order', key: 'sortOrder', width: 15 }
                     ],
-                    value:[
+                    values:[
                         {
                             name:'Size',showColors:'TRUE',description:'Size is important',sortOrder:'1'
                         }
@@ -53,7 +53,7 @@ Example format:</p>
                         { header: 'Option Name', key: 'optionName', width: 15,type:'dropdown',dropDownValues:['Size']  },
                         { header: 'Sort Order', key: 'sortOrder', width: 15 }
                     ],
-                    value:[
+                    values:[
                         {
                             optionValue:'s',color:'#005374',optionName:'Size',sortOrder:'1'
                         }
@@ -64,7 +64,7 @@ Example format:</p>
                     columns:[
                         { header: 'Instruction', key: 'instruction', width: 25  }
                     ],
-                    value:[
+                    values:[
                         {
                             instruction:'1) Option Name should be given in the option value sheets option name column.'
                         },
@@ -139,20 +139,20 @@ Example format:</p>
 </li>
 </ol>
 <p><strong>Dont add dropvalues to new sheet instead just add  it to that column.</strong><br>
-3. <strong>value</strong>:<br>
+3. <strong>values</strong>:<br>
 The data added to the sheet’s rows. Uses the column key property as the object key.</p>
-<pre><code>	value:[
+<pre><code>	values:[
 		   {name:'Product 1',orderQuantityMaximum:'10',description:'Product 1 is a good product',weightCount:'2'}
 		  ]
 </code></pre>
-<p>The data at <code>value[0]</code> is added to <strong>row 1</strong> of the sheet and so on. You can add multiple rows.</p>
+<p>The data at <code>values[0]</code> is added to <strong>row 1</strong> of the sheet and so on. You can add multiple rows.</p>
 <p><strong>Instructions</strong> :</p>
 <p>Instruction should  be added as an new sheet.</p>
 <pre><code>	{
 		"sheetName":  "Instruction",
 		"columns": [
 		{ "header":  "Instruction", "key":  "instruction", "width":  35 }],
-		"value": [
+		"values": [
 			{ "instruction":  "1. Before proceeding the Product Bulk Import, you need to fill the necessary Brand and Locations first in the admin portal." 
 			{ "instruction":  "2. Should not change the heading names &amp; sheet names in the import sheet" }]
 	}
